@@ -56,7 +56,7 @@ class GroupedTests extends Component {
       <div>
         {groupedTests &&
           sortedGroups.map(group => (
-            <div key={group.id}>
+            <div key={group.id} data-testid="test-grouping">
               <Button
                 id={`${group.id}-group`}
                 color="secondary"
