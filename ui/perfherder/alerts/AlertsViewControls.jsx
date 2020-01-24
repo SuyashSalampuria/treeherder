@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Row } from 'reactstrap';
 
 import FilterControls from '../FilterControls';
 import { convertParams } from '../helpers';
 
 import AlertTable from './AlertTable';
+import PaginationGroup from './Pagination';
 
 export default class AlertsViewControls extends React.Component {
   constructor(props) {
@@ -68,7 +70,9 @@ export default class AlertsViewControls extends React.Component {
       alertSummaries,
       dropdownOptions,
       fetchAlertSummaries,
+      pageNums,
       user,
+      validated,
     } = this.props;
     const {
       hideImprovements,
@@ -76,7 +80,6 @@ export default class AlertsViewControls extends React.Component {
       hideAssignedToOthers,
       isListingAlertSummaries,
     } = this.state;
-
     const alertFilters = [
       {
         text: 'Hide improvements',
@@ -107,6 +110,16 @@ export default class AlertsViewControls extends React.Component {
           updateFilterText={filterText => this.setState({ filterText })}
           dropdownCol
         />
+        {pageNums && pageNums.length > 1 && (
+          <Row className="justify-content-center">
+            <PaginationGroup
+              pageNums={pageNums}
+              updateParams={validated.updateParams}
+              page={validated.page}
+              fetchData={fetchAlertSummaries}
+            />
+          </Row>
+        )}
         {alertSummaries.length > 0 &&
           alertSummaries.map(alertSummary => (
             <AlertTable
@@ -118,6 +131,16 @@ export default class AlertsViewControls extends React.Component {
               user={user}
             />
           ))}
+        {pageNums && pageNums.length > 1 && (
+          <Row className="justify-content-center">
+            <PaginationGroup
+              pageNums={pageNums}
+              updateParams={validated.updateParams}
+              page={validated.page}
+              fetchData={fetchAlertSummaries}
+            />
+          </Row>
+        )}
       </React.Fragment>
     );
   }
@@ -128,6 +151,7 @@ AlertsViewControls.propTypes = {
     updateParams: PropTypes.func,
   }).isRequired,
   isListingAlertSummaries: PropTypes.bool,
+  pageNums: PropTypes.array.isRequired,
   dropdownOptions: PropTypes.arrayOf(PropTypes.shape({})),
   fetchAlertSummaries: PropTypes.func.isRequired,
   alertSummaries: PropTypes.arrayOf(PropTypes.shape({})),
