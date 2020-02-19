@@ -40,27 +40,27 @@ class TreeherderCycler(DataCycler):
     source = TREEHERDER.title()
 
     def cycle(self):
-        self.logger.warning("Cycling jobs across all repositories")
+        self.logger.info("Cycling jobs across all repositories")
 
         try:
             rs_deleted = Job.objects.cycle_data(self.cycle_interval,
                                                 self.chunk_size,
                                                 self.sleep_time)
-            self.logger.warning("Deleted {} jobs".format(rs_deleted))
+            self.logger.info("Deleted {} jobs".format(rs_deleted))
         except OperationalError as e:
             self.logger.error("Error running cycle_data: {}".format(e))
 
         self.remove_leftovers()
 
     def remove_leftovers(self):
-        self.logger.warning('Pruning ancillary data: job types, groups and machines')
+        self.logger.info('Pruning ancillary data: job types, groups and machines')
 
         def prune(id_name, model):
-            self.logger.warning('Pruning {}s'.format(model.__name__))
+            self.logger.info('Pruning {}s'.format(model.__name__))
             used_ids = Job.objects.only(id_name).values_list(id_name, flat=True).distinct()
             unused_ids = model.objects.exclude(id__in=used_ids).values_list('id', flat=True)
 
-            self.logger.warning('Removing {} records from {}'.format(len(unused_ids), model.__name__))
+            self.logger.info('Removing {} records from {}'.format(len(unused_ids), model.__name__))
 
             while len(unused_ids):
                 delete_ids = unused_ids[:self.chunk_size]
@@ -144,10 +144,10 @@ class Command(BaseCommand):
         subparsers.add_parser(PERFHERDER_SUBCOMMAND)
 
     def handle(self, *args, **options):
-        logger.warning("Cycle interval... {} days".format(options['days']))
+        logger.info("Cycle interval... {} days".format(options['days']))
 
         data_cycler = self.fabricate_data_cycler(options, logger)
-        logger.warning('Cycling {0} data...'.format(data_cycler.source))
+        logger.info('Cycling {0} data...'.format(data_cycler.source))
         data_cycler.cycle()
 
     def fabricate_data_cycler(self, options, logger):

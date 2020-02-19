@@ -432,7 +432,7 @@ class JobManager(models.Manager):
                 # this next chunk is too young, we are done
                 return jobs_cycled
 
-            logger.warning(
+            logger.info(
                 "Pruning jobs: chunk of {} older than {}".format(
                     max_chunk["count"], jobs_max_timestamp.strftime("%b %d %Y")
                 )
@@ -440,7 +440,7 @@ class JobManager(models.Manager):
 
             # Remove ORM entries for these jobs that don't currently have a
             # foreign key relation
-            logger.warning("deleting FailureLines")
+            logger.info("deleting FailureLines")
             delete_guid = list(
                 Job.objects.filter(id__lt=max_id)
                 .only("guid")

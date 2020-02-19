@@ -31,7 +31,7 @@ def update_job_priority_table():
         return _update_table(data)
     else:
         # XXX: Should we do this differently?
-        logger.warning('We received an empty data set')
+        logger.info('We received an empty data set')
         return
 
 

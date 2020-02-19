@@ -41,7 +41,7 @@ class SETAJobPriorities:
                 # e.g. desktop-test-linux64-pgo/opt-reftest-13 or builder name
                 jobs.append(ref_data_names_map[key])
             else:
-                logger.warning('Job priority (%s) not found in accepted jobs list', jp)
+                logger.info('Job priority (%s) not found in accepted jobs list', jp)
 
         return jobs
 

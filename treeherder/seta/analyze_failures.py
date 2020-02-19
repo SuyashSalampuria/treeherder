@@ -31,7 +31,7 @@ class AnalyzeFailures:
             high_value_jobs = get_high_value_jobs(fixed_by_commit_jobs)
 
             if not self.dry_run:
-                logger.warning("Let's see if we need to increase the priority of any job")
+                logger.info("Let's see if we need to increase the priority of any job")
                 JobPriority.objects.clear_expiration_field_for_expired_jobs()
                 JobPriority.objects.adjust_jobs_priority(high_value_jobs)
 
@@ -75,7 +75,7 @@ def get_failures_fixed_by_commit():
 
     # check if at least one fixed by commit job meets our requirements without populating queryset
     if not fixed_by_commit_data_set.exists():
-        logger.warning("We couldn't find any fixed-by-commit jobs")
+        logger.info("We couldn't find any fixed-by-commit jobs")
         return failures
 
     # now process the fixed by commit jobs in batches using django's queryset iterator
@@ -122,7 +122,7 @@ def get_failures_fixed_by_commit():
                 if is_job_blacklisted(testtype):
                     continue
             else:
-                logger.warning('We were unable to parse %s/%s',
+                logger.info('We were unable to parse %s/%s',
                                job_note.job.job_type.name, job_note.job.signature.name)
                 continue
 
@@ -136,5 +136,5 @@ def get_failures_fixed_by_commit():
             logger.warning('job_note %s has no job associated to it', job_note.id)
             continue
 
-    logger.warning("Number of fixed_by_commit revisions: %s", len(failures))
+    logger.info("Number of fixed_by_commit revisions: %s", len(failures))
     return failures

@@ -90,7 +90,7 @@ class HgPushlogProcess:
                 extracted_content = self.extract(source_url + "&changeset=" +
                                                  changeset)
             else:
-                logger.warning("Unable to get last push from cache for '%s', "
+                logger.info("Unable to get last push from cache for '%s', "
                                "getting all pushes", repository_name)
                 extracted_content = self.extract(source_url)
 

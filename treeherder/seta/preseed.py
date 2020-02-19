@@ -59,7 +59,7 @@ def load_preseed(validate=False):
     """
     logger.info("About to load preseed.json")
     if not JobPriority.objects.exists():
-        logger.warning("There's no JobPriority objects in the table. Call first ./manage.py initialize_seta")
+        logger.info("There's no JobPriority objects in the table. Call first ./manage.py initialize_seta")
         return
 
     preseed = preseed_data()

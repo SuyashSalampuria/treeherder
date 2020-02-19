@@ -39,7 +39,7 @@ def store_job_info_artifact(job, job_info_artifact):
         for (k, v) in job_detail_dict.items():
             max_field_length = JobDetail._meta.get_field(k).max_length
             if v is not None and len(v) > max_field_length:
-                logger.warning("Job detail '%s' for job_guid %s too long, truncating",
+                logger.info("Job detail '%s' for job_guid %s too long, truncating",
                                v[:max_field_length], job.guid)
                 job_detail_dict[k] = v[:max_field_length]
 
@@ -149,7 +149,7 @@ def store_job_artifacts(artifact_data):
                                    "means the job was already parsed",
                                    job_guid)
             else:
-                logger.warning("Unknown artifact type: %s submitted with job %s",
+                logger.info("Unknown artifact type: %s submitted with job %s",
                                artifact_name, job.guid)
         else:
             logger.error('store_job_artifacts: artifact type %s not understood', artifact_name)

@@ -193,7 +193,7 @@ into chunks of chunk_size size."""
                         break  # finished removing all expired data
                     else:
                         any_succesful_attempt = True
-                        logger.warning('Successfully deleted {} performance datum rows'.format(deleted_rows))
+                        logger.info('Successfully deleted {} performance datum rows'.format(deleted_rows))
 
     def _compute_ideal_chunk_size(self, max_timestamp, max_chunk_size):
         '''
