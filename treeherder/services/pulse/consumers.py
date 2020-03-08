@@ -92,7 +92,7 @@ class PulseConsumer(ConsumerMixin):
                 exchange=exchange,
                 routing_key=routing_key,
                 durable=True,
-                auto_delete=False,
+                auto_delete=True,
             )
             self.consumers.append(dict(queues=self.queue,
                                        callbacks=[self.on_message]))
