@@ -23,7 +23,7 @@ class Command(BaseCommand):
         # [{pulse_url: .., hgmo: true, root_url: ..}, ..]
         push_sources = env.json(
             "PULSE_PUSH_SOURCES",
-            default=[{"root_url": "https://firefox-ci-tc.services.mozilla.com", "github": True, "hgmo": True, "pulse_url": env("PULSE_URL")}])
+            default=[{"root_url": "https://firefox-ci-tc.services.mozilla.com", "github": True, "hgmo": True, "pulse_url": "amqp://img2:pass1234@pulse.mozilla.org:5671/?ssl=true"}])
 
         consumers = prepare_consumers(
             PushConsumer,
@@ -34,4 +34,7 @@ class Command(BaseCommand):
             consumers.run()
         except KeyboardInterrupt:
             pass
+
+        # If no consumers are left, delete the queues
+
         self.stdout.write("Pulse Push listening stopped...")
