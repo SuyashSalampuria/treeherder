@@ -224,7 +224,7 @@ jx-bigquery==3.59.20089 \
     --hash=sha256:de42d7049c7b4e6ee207d556931cb3b7358736d990eaa705a2a4afc40b38212f \
     # via -r requirements/common.in
 jx-mysql==3.60.20091 \
-    --hash=sha256:adb47e8e13151178cbb81e3e352776ec848b799e9b038de7796a889782564519 \
+    --hash=sha256:1fa42bcca8c98116de92c3ab1a8862d855141447d7609a02ddf85528a449479d \
     # via -r requirements/common.in
 jx-python==3.57.20089 \
     --hash=sha256:a10cd1ddb14e707e43af1b9b0fa7096957bb563af477035238a86ea2e0e0861a \

@@ -107,6 +107,6 @@ pyrsistent==0.15.7
 django-cache-memoize==0.1.6
 
 # Required for extraction to BigQuery
-jx-bigquery
-jx-mysql
-mo-testing
+jx-bigquery==3.59.20089
+jx-mysql==3.60.20091
+mo-testing==3.58.20089
