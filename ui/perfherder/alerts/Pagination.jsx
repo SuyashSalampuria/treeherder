@@ -17,13 +17,21 @@ class PaginationGroup extends React.Component {
          so they haven't been added */
       <Pagination aria-label={`Page ${page}`}>
         {page > 1 && (
-          <PaginationItem>
-            <PaginationLink
-              className="text-info"
-              previous
-              onClick={() => this.navigatePage(page - 1)}
-            />
-          </PaginationItem>
+          <React.Fragment>
+            <PaginationItem>
+              <PaginationLink
+                first
+                onClick={() => this.navigatePage(pageNums.slice(0, 1))}
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink
+                className="text-info"
+                previous
+                onClick={() => this.navigatePage(page - 1)}
+              />
+            </PaginationItem>
+          </React.Fragment>
         )}
         {pageNums.map(num => (
           <PaginationItem
@@ -40,13 +48,21 @@ class PaginationGroup extends React.Component {
           </PaginationItem>
         ))}
         {page < count && (
-          <PaginationItem>
-            <PaginationLink
-              className="text-info"
-              next
-              onClick={() => this.navigatePage(page + 1)}
-            />
-          </PaginationItem>
+          <React.Fragment>
+            <PaginationItem>
+              <PaginationLink
+                className="text-info"
+                next
+                onClick={() => this.navigatePage(page + 1)}
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink
+                last
+                onClick={() => this.navigatePage(pageNums.slice(-1))}
+              />
+            </PaginationItem>
+          </React.Fragment>
         )}
       </Pagination>
     );
