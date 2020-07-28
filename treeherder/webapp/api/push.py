@@ -12,7 +12,7 @@ from treeherder.model.models import Job, JobType, Push, Repository
 from treeherder.push_health.builds import get_build_failures
 from treeherder.push_health.compare import get_commit_history
 from treeherder.push_health.linting import get_lint_failures
-from treeherder.push_health.tests import get_test_failures
+from treeherder.push_health.tests import get_test_failures, get_test_failure_jobs
 from treeherder.push_health.usage import get_usage
 from treeherder.webapp.api.serializers import PushSerializer
 from treeherder.webapp.api.utils import to_datetime, to_timestamp
@@ -257,6 +257,7 @@ class PushViewSet(viewsets.ViewSet):
             if commit_history_details['exactMatch']:
                 parent_push = commit_history_details.pop('parentPush')
 
+        push_health_test_jobs = get_test_failure_jobs(push)
         push_health_test_failures = get_test_failures(push, parent_push)
         test_result = 'pass'
         if len(push_health_test_failures['needInvestigation']):
@@ -300,6 +301,11 @@ class PushViewSet(viewsets.ViewSet):
                         'name': 'Linting',
                         'result': lint_result,
                         'details': lint_failures,
+                    },
+                    'jobs': {
+                        'name': 'All Jobs',
+                        'result': test_result,
+                        'details': push_health_test_jobs,
                     },
                     'tests': {
                         'name': 'Tests',
